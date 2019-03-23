@@ -1,1 +1,30 @@
+input {
+  file {
+    
+      path => ["F:/Logstash/shakespeare_6.0.json"]
+	  type => "json"
+	  start_position => "beginning"
+	  sincedb_path => "/dev/null"    
+  }
+}
 
+
+filter {
+  grok {
+
+            match => { "message" => "%{GREEDYDATA"}
+              }
+
+
+ 
+    }
+
+output {
+  stdout { 
+  codec => rubydebug
+  }
+  elasticsearch { 
+      hosts => "https://7b765c0b984b4025a1cbcd47db4b78e5.eu-west-1.aws.found.io:9243" 
+      index => "logstash.json"
+      }
+  
